@@ -1,0 +1,56 @@
+{
+	servers :443 {
+		protocol {
+			experimental_http3
+		}
+	}
+}
+
+(TLS) {
+	tls   cert.pem  cert.key
+}
+
+(COMMON_CONFIG) {
+	encode zstd gzip
+	file_server
+
+	import TLS
+
+	handle_errors {
+		@4xx expression `{http.error.status_code} >= 400 && {http.error.status_code} < 500`
+		respond @4xx "{http.error.status_code} error!"
+		respond "{http.error.status_code} error!"
+	}
+}
+
+localhost {
+	root * D://html
+
+    import COMMON_CONFIG
+
+	reverse_proxy /h2c-pong :21983 {
+		transport http {
+			versions h2c
+			dial_timeout 2s
+		}
+	}
+
+	reverse_proxy /h2c-vless :21984 {
+		transport http {
+			versions h2c
+			dial_timeout 2s
+		}
+	}	
+
+	@websockets {
+		path /ws-pong
+		header Connection *Upgrade*
+		header Upgrade websocket
+	}
+
+	reverse_proxy @websockets :21985 {
+		transport http {
+			dial_timeout 2s
+		}
+	}
+}

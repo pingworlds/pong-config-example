@@ -1,0 +1,30 @@
+{
+    "statTime": 30,
+    "listens": [
+          {
+            "transport": "h2c",
+            "host": "127.0.0.1:21983",
+            "protocol": "pong",          
+            "clients": [
+                "0f608556-88f7-11ec-a8a3-0242ac120002"
+            ]          
+        },
+        {
+            "transport": "h2c",
+            "host": "127.0.0.1:21984",
+            "protocol": "vless",          
+            "clients": [
+                "0f608556-88f7-11ec-a8a3-0242ac120002"
+            ]     
+        }, 
+        {
+            "transport": "ws",
+            "host": "127.0.0.1:21985",           
+            "protocol": "pong",
+            "clients": [
+                "0f608556-88f7-11ec-a8a3-0242ac120002"
+            ],
+            "disabled": false
+        }
+    ]
+}

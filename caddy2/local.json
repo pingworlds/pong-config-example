@@ -1,0 +1,41 @@
+{
+    "autoTry": true,
+    "listens": [
+        {
+            "transport": "tcp",
+            "host": ":11984",
+            "protocol": "socks"
+        }
+    ],
+    "points": [
+        {
+            "transport": "h2",
+            "host": "$domain",
+            "protocol": "pong",       
+            "path": "/h2c-pong",           
+            "clients": [
+                "0f608556-88f7-11ec-a8a3-0242ac120002"
+            ],
+            "insecureSkip": true,
+            "disabled": false
+        },
+        {
+            "transport": "h2",
+            "host": "$domain",
+            "path": "/h2-vless",
+            "protocol": "vless",
+            "clients": [
+                "0f608556-88f7-11ec-a8a3-0242ac120002"
+            ]       
+        },
+        {
+            "transport": "wss",
+            "host": "$domain",
+            "path": "/ws-pong",
+            "protocol": "pong",
+            "clients": [
+                "0f608556-88f7-11ec-a8a3-0242ac120002"
+            ] 
+        }
+    ] 
+}
